@@ -234,11 +234,27 @@ int main(int argc, char **argv)
 	
 	void *data;
 	unsigned sz;
-	char *kname = argv[1];
-	char *rname = 0;
-	char *sname = 0;
+	if (argc < 2) {
+		printf("Quick and dirty fastboot server\n");
+		printf("Usage: fastbootd kernel [initrd] [secondstage] \n");
+		printf("Hacked from google's fastboot sources in a few hours in 2015 \n");
+		printf("by Necromant <spam at ncrmnt.org>  \n");
+		exit(1);
+	}
 	
+	char *kname = NULL;
+	char *sname = NULL;
+	char *rname = NULL;
+
+	if (argc > 1) 
+		kname = argv[1];
 	
+	if (argc > 2) 
+		rname = argv[2];
+	
+	if (argc > 3) 
+		sname = argv[3];
+		
 	data = load_bootable_image(kname, rname, sname, &sz, NULL);
 	if (data == 0) return 1;
 	fb_queue_download("boot.img", data, sz);
