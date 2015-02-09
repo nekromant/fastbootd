@@ -44,8 +44,8 @@ I needed a tftp replacement. Fastboot was the only option here. And I needed the
 OpenWRT box. 
 
 Unfortunately android's fastboot utility is a huge pile of smoking crap that can't be
-built outside anroid buidsystem. Moreover, original fastboot has a whole load of weird dependencies 
-and strange modes. 
+built outside android buidsystem. Moreover, original fastboot has a whole load of weird dependencies 
+and strange modes. Now try to integrate that into OpenWRT's package system!
 
 Srsly, people at google, if you're reading this - google the words "KISS" and "unix-way". 
 
