@@ -230,10 +230,9 @@ usb_handle *open_device(void)
 int main(int argc, char **argv)
 {
 	static usb_handle *usb = 0;
-	usb = open_device();
-	
 	void *data;
 	unsigned sz;
+
 	if (argc < 2) {
 		printf("Quick and dirty fastboot server\n");
 		printf("Usage: fastbootd kernel [initrd] [secondstage] \n");
@@ -241,6 +240,8 @@ int main(int argc, char **argv)
 		printf("by Necromant <spam at ncrmnt.org>  \n");
 		exit(1);
 	}
+
+	usb = open_device();
 	
 	char *kname = NULL;
 	char *sname = NULL;
