@@ -1,0 +1,24 @@
+#!/bin/sh /etc/rc.common
+# FastBootD daemon
+# Copyright (C) 2015 Andrew 'Necromant' Andrianov
+ 
+START=10
+STOP=15
+FILE=/tftp/zImage-blade
+
+start() { 
+        cd /
+        exec >/dev/null
+        exec 2>/dev/null
+        (
+        trap "" TERM
+        /usr/bin/fastbootd $FILE
+        ) &        
+        #setsid "/usr/bin/fastbootd $FILE" >/dev/null 2>&1 < /dev/null &
+        # commands to launch application
+}                 
+ 
+stop() {          
+        killall -9 fastbootd
+        # commands to kill application 
+}
