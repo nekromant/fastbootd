@@ -223,7 +223,7 @@ usb_handle *open_device(void)
 			announce = 0;
 			fprintf(stderr,"< waiting for device >\n");
 		}
-		usleep(1000);
+		sleep(3);
 	}
 }
 	
