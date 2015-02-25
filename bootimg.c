@@ -29,8 +29,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <byteswap.h>
 
 #include "bootimg.h"
+
+
+int is_little_endian()
+{
+	int i = 1;
+	char *p = (char *)&i;
+	return (*p);
+} 
+
 
 void bootimg_set_cmdline(boot_img_hdr *h, const char *cmdline)
 {
@@ -75,6 +85,21 @@ boot_img_hdr *mkbootimg(void *kernel, unsigned kernel_size, unsigned kernel_offs
     hdr->tags_addr =    base + tags_offset;
 
     hdr->page_size =    page_size;
+
+    /* We target le. But if we're not le, we need swaps */
+    if (!is_little_endian()) { 
+	    printf("Ooops, we're BIG endian. Swapping headers\n");
+	    hdr->kernel_size  = __bswap_32(hdr->kernel_size);    
+	    hdr->ramdisk_size = __bswap_32(hdr->ramdisk_size); 
+	    hdr->second_size  = __bswap_32(hdr->second_size);       
+
+	    hdr->kernel_addr  = __bswap_32(hdr->kernel_addr);    
+	    hdr->ramdisk_addr = __bswap_32(hdr->ramdisk_addr); 
+	    hdr->second_addr  = __bswap_32(hdr->second_addr);
+	    hdr->tags_addr    = __bswap_32(hdr->tags_addr);
+
+	    hdr->page_size    = __bswap_32(hdr->page_size);
+    }
 
 
     memcpy(hdr->magic + page_size,
