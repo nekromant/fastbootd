@@ -8,7 +8,7 @@ fastbootd: $(FILES)
 	$(CC) -std=gnu99 $(FILES) -o $(@)
 
 install: fastbootd
-	cp fastboot $(PREFIX)/bin
+	cp fastbootd $(PREFIX)/bin
 
 clean:
 	-rm fastbootd
